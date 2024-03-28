@@ -3,17 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Boxicons CSS -->
+    <title>Dompetku</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <title>Side Navigation Bar in HTML CSS JavaScript</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="carousel.css" />
   </head>
   <body>
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
         <i class="bx bx-menu" id="sidebarOpen"></i>
-        <i class='bx bx-wallet' ></i>Dompetku
+        <i class='bx bx-wallet'></i>Dompetku
       </div>
 
       <div class="navbar_content">
@@ -70,11 +71,165 @@
       </div>
     </nav>
 
-    <div class="admin-area">
-      ssssddddddddddddddd
-      </div>
+    <div class="content-all">
+      <div class="content-left">
+        <!-- Section Blance -->
+        <div class="card-balance">
+          <div class="space-between-center">
+            <div class="font-24 black-color">Your Balance</div>
+            <button class="btn-icon">
+              <div class="font-12">Edit</div>
+              <i class='bx bxs-pencil' ></i>
+            </button>
+          </div>
+          <div class="space-between-center">
+            <div class="font-32 black-color">Rp</div>
+            <div class="wrapper">
+              <div class="font-32 black-color">300.000.000,</div>
+              <div class="font-24 black-color">68</div>
+            </div>
+            <i class='bx bx-show icon-24 black-color'></i>
+          </div>
+        </div>
+        <!-- Section Deposit Decrease -->
+        <div class="card-depo-decr">
+          <div class="card-deposit">
+            <div class="font-16 black-color">
+              Deposit
+            </div>
+            <div class="font-20 black-color">
+              Rp 500.000,00
+            </div>
+            <div class="wrapper gap-4">
+              <i class='bx bx-right-top-arrow-circle blue-color'></i>
+              <div class="font-12 black-color">
+                15,2%
+              </div>
+            </div>
+            
+          </div>
+          <div class="card-deposit border-red">
+            <div class="font-16 black-color">
+              Decrease
+            </div>
+            <div class="font-20 black-color">
+              Rp 500.000,00
+            </div>
+            <div class="wrapper gap-4">
+              <i class='bx bx-right-down-arrow-circle red-color' ></i>
+              <div class="font-12 black-color">
+                15,2%
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Section Wallet -->
+        <div class="card-wallet">
+          <div class="space-between-top">
+            <div class="space-between-top gap-4">
+              <div class="font-24 black-color">Your Wallet</div>
+              <div class="font-12 black-color">(3)</div>
+            </div>
+            <button class="btn-icon">
+              <div class="font-12 blue-color">Add New</div>
+              <i class='bx bx-plus' ></i>
+            </button>
+            
+          </div>
+          <div class="card-content">
+            <div class="swiper mySwiper">
+              <div class="swiper-wrapper">
+                <!-- Here Card -->
+                <div class="swiper-slide">
+                  <div class="card-font">
+                    <div class="space-between-top">
+                      <div class="space-between-top gap-12">
+                        <img class="img-16" src="./asset/Vector.svg" alt="">
+                        <div class="font-14 white-to-white-color">Dompet 1</div>
+                      </div>
+                      <img class="img-16" src="./asset/3dot.svg" alt="">
+                      
+                    </div>
+                    <div class="space-balance">
+                      <div class="font-12 white-to-white-color">Balance</div>
+                      <div class="font-16 white-to-white-color">Rp 200.000.000,00</div>
+                    </div>
+                    <div class="font-14 white-to-white-color">ANTM</div>
 
-    <!-- JavaScript -->
+                  </div>
+                </div>
+                <!-- Here Card -->
+                <div class="swiper-slide">
+                  <div class="card-font">
+                    <div class="space-between-top">
+                      <div class="space-between-top gap-12">
+                        <img class="img-16" src="./asset/Vector.svg" alt="">
+                        <div class="font-14 white-to-white-color">Dompet 2</div>
+                      </div>
+                      <img class="img-16" src="./asset/3dot.svg" alt="">
+                      
+                    </div>
+                    <div class="space-balance">
+                      <div class="font-12 white-to-white-color">Balance</div>
+                      <div class="font-16 white-to-white-color">Rp 100.000.000,00</div>
+                    </div>
+                    <div class="font-14 white-to-white-color">BITCOIN</div>
+
+                  </div>
+                </div>
+                <!-- Here Card -->
+                <div class="swiper-slide">
+                  <div class="card-font">
+                    <div class="space-between-top">
+                      <div class="space-between-top gap-12">
+                        <img class="img-16" src="./asset/Vector.svg" alt="">
+                        <div class="font-14 white-to-white-color">Dompet 3</div>
+                      </div>
+                      <img class="img-16" src="./asset/3dot.svg" alt="">
+                      
+                    </div>
+                    <div class="space-balance">
+                      <div class="font-12 white-to-white-color">Balance</div>
+                      <div class="font-16 white-to-white-color">Rp 100.000.000,00</div>
+                    </div>
+                    <div class="font-14 white-to-white-color">ETHERIUM</div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          </div>
+        </div>
+        <div class="content-right">
+          <div class="card-statistic">
+            <div class="space-between-center">
+              <div class="font-24 black-color">Statistics</div>
+              <button class="btn-icon">
+                <div class="font-12">Edit</div>
+                <i class='bx bxs-pencil' ></i>
+              </button>
+            </div>
+  
+          </div>
+          <div class="card-activity">
+            <div class="font-24 black-color">Recent Activity</div>
+          </div>
+        </div>
+      </div>
+      
+  
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
+  
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        effect: "cards",
+        grabCursor: true,
+      });
+    </script>
   </body>
 </html>

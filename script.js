@@ -9,9 +9,13 @@ sidebarOpen.addEventListener("click", () => sidebar.classList.toggle("close"));
 
 sidebarClose.addEventListener("click", () => {
   sidebar.classList.add("close", "hoverable");
+  const adminArea = document.querySelector('.admin-area');
+  adminArea.style.margin = '95px 50px 50px 80px';
 });
 sidebarExpand.addEventListener("click", () => {
   sidebar.classList.remove("close", "hoverable");
+  const adminArea = document.querySelector('.admin-area');
+  adminArea.style.margin= '95px 50px 50px 260px';
 });
 
 sidebar.addEventListener("mouseenter", () => {
@@ -28,7 +32,7 @@ sidebar.addEventListener("mouseleave", () => {
 darkLight.addEventListener("click", () => {
   body.classList.toggle("dark");
   if (body.classList.contains("dark")) {
-    document.setI
+    document.setI;
     darkLight.classList.replace("bx-sun", "bx-moon");
   } else {
     darkLight.classList.replace("bx-moon", "bx-sun");
@@ -51,3 +55,30 @@ if (window.innerWidth < 768) {
 } else {
   sidebar.classList.remove("close");
 }
+
+var TrandingSlider = new Swiper('.tranding-slider', {
+  effect: 'coverflow',
+  grabCursor: true,
+  centeredSlides: true,
+  loop: true,
+  slidesPerView: 'auto',
+  coverflowEffect: {
+    rotate: 0,
+    stretch: 0,
+    depth: 100,
+    modifier: 2.5,
+  },
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  }
+});
+
+var swiper = new Swiper(".mySwiper", {
+  effect: "cards",
+  grabCursor: true,
+});
