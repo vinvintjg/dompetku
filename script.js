@@ -226,14 +226,14 @@ let originalusedBalance = usedBalanceElement.textContent;
 toggleIcon.addEventListener('click', function() {
   const isHidden = amountElement.classList.toggle('hidden');
   if (isHidden) {
-    toggleIcon.classList.remove('bx-hide');
-    toggleIcon.classList.add('bx-show');
+    toggleIcon.classList.remove('bx-show');
+    toggleIcon.classList.add('bx-hide');
     amountElement.textContent = '***.***.***,';
     unusedBalanceElement.textContent = '***.***.***';
     usedBalanceElement.textContent = '***.***.***';
   } else {
-    toggleIcon.classList.remove('bx-show');
-    toggleIcon.classList.add('bx-hide');
+    toggleIcon.classList.remove('bx-hide');
+    toggleIcon.classList.add('bx-show');
     amountElement.textContent = originalAmount;
     unusedBalanceElement.textContent = originalunusedBalance;
     usedBalanceElement.textContent = originalusedBalance;
