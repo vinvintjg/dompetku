@@ -73,23 +73,26 @@
       </div>
     </nav>
 
-    <div class="content-all" style="flex-direction: column;align-items: top;">
+    <div class="card-profile">
         <div class="profile-image">
             <img src="./asset/profile.jpg">
+            <div class="edit-button">
+              <div class="btn-icon4">
+                <i class='bx bxs-pencil'></i>
+              </div>
+            </div>
         </div>
-        <div class="card-wallet h100" style="justify-content: start;">
+        <div class="form-profile">
             <div class="label-input black-color">
                 <label for="Username">Username</label>
-                <input type="text" name="Username" placeholder="Username">
+                <input type="text" name="Username" value="Kevin" readonly>
             </div>
             <div class="label-input black-color">
                 <label for="Username">Email</label>
-                <input type="text" name="Username" placeholder="username@gmail.com">
-            </div>
-            <button class="btn-icon2 font-12" onclick="updateData()">Update Data</button>
+                <input type="text" name="Username" value="Kevin@gmail.com" readonly>
             </div>
         </div>
-      </div>
+    </div>
       
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
