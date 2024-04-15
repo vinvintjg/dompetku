@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Profile from '../Assets/profile.jpg';
 import Navbar from "../Navbar/Navbar";
+import '../../src/Stylist.css'
+import axios from 'axios';
+
 function UserProfile() {
+  const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/v1/dompetku/owner?username=Vincent');
+            setUserData(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        };
+
+        fetchData();
+    }, []);
   return (
   <>
     <Navbar/>
+    <div className="content-all">
     <div className="card-profile">
       <div className="profile-image">
         <img src={Profile} alt="Profile" />
@@ -14,16 +32,19 @@ function UserProfile() {
           </div>
         </div>
       </div>
+      {userData && (
       <div className="form-profile">
         <div className="label-input black-color">
           <label htmlFor="Username">Username</label>
-          <input type="text" name="Username" value="Kevin" readOnly />
+          <input type="text" name="Username" value={userData.username} readOnly />
         </div>
         <div className="label-input black-color">
           <label htmlFor="Email">Email</label>
-          <input type="text" name="Email" value="Kevin@gmail.com" readOnly />
+          <input type="text" name="Email" value="{userData.username}" readOnly />
         </div>
       </div>
+      )}
+    </div>
     </div>
   </>
   );

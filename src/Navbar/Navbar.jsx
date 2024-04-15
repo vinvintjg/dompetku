@@ -1,10 +1,27 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import 'boxicons/css/boxicons.min.css';
 import './Style.css';
-import CardProfile from '../Profile/Profile';
+import '../../src/Stylist.css'
+import ProfileImage from "../Assets/profile.jpg";
+import axios from 'axios';
 
 function Navbar() {
+
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/v1/dompetku/owner?username=Vincent');
+            setUserData(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        };
+
+        fetchData();
+    }, []);
+    
     useEffect(() => {
         const body = document.querySelector("body");
         const darkLight = document.querySelector("#darkLight");
@@ -17,16 +34,26 @@ function Navbar() {
         const handleSidebarOpen = () => sidebar.classList.toggle("close");
 
         const handleSidebarClose = () => {
-            sidebar.classList.add("close", "hoverable");
-            const adminArea = document.querySelector('.content-all');
-            adminArea.style.margin = '95px 50px 50px 80px';
-        };
-
-        const handleSidebarExpand = () => {
-            sidebar.classList.remove("close", "hoverable");
-            const adminArea = document.querySelector('.content-all');
-            adminArea.style.margin = '95px 50px 50px 260px';
-        };
+            const sidebar = document.querySelector('.sidebar'); // Select the sidebar element
+            if (sidebar) {
+              sidebar.classList.add("close", "hoverable");
+              const adminArea = document.querySelector('.content-all');
+              if (adminArea) {
+                adminArea.style.margin = '95px 50px 50px 80px';
+              }
+            }
+          };
+          
+          const handleSidebarExpand = () => {
+            const sidebar = document.querySelector('.sidebar'); // Select the sidebar element
+            if (sidebar) {
+              sidebar.classList.remove("close", "hoverable");
+              const adminArea = document.querySelector('.content-all');
+              if (adminArea) {
+                adminArea.style.margin = '95px 50px 50px 260px';
+              }
+            }
+          };
 
         const handleMouseEnter = () => {
             if (sidebar.classList.contains("hoverable")) {
@@ -49,30 +76,20 @@ function Navbar() {
             }
         };
 
-        const handleSubmenuItemToggle = (item, index) => {
-            item.addEventListener("click", () => {
-                item.classList.toggle("show_submenu");
-                submenuItems.forEach((item2, index2) => {
-                    if (index !== index2) {
-                        item2.classList.remove("show_submenu");
-                    }
-                });
-            });
-        };
-
         sidebarOpen.addEventListener("click", handleSidebarOpen);
         sidebarClose.addEventListener("click", handleSidebarClose);
         sidebarExpand.addEventListener("click", handleSidebarExpand);
         sidebar.addEventListener("mouseenter", handleMouseEnter);
         sidebar.addEventListener("mouseleave", handleMouseLeave);
         darkLight.addEventListener("click", handleDarkLightClick);
-        submenuItems.forEach((item, index) => handleSubmenuItemToggle(item, index));
 
         if (window.innerWidth < 768) {
             sidebar.classList.add("close");
         } else {
             sidebar.classList.remove("close");
         }
+
+        
 
         return () => {
             sidebarOpen.removeEventListener("click", handleSidebarOpen);
@@ -82,8 +99,16 @@ function Navbar() {
             sidebar.removeEventListener("mouseleave", handleMouseLeave);
             darkLight.removeEventListener("click", handleDarkLightClick);
             submenuItems.forEach((item, index) => {
-                item.removeEventListener("click", () => handleSubmenuItemToggle(item, index));
-            });
+                item.addEventListener("click", () => {
+                  item.classList.toggle("show_submenu");
+                  submenuItems.forEach((item2, index2) => {
+                    if (index !== index2) {
+                      item2.classList.remove("show_submenu");
+                    }
+                  });
+                });
+              });
+              
         };
     }, []);
 
@@ -100,9 +125,12 @@ function Navbar() {
                     <i className="bi bi-grid"></i>
                     <i className='bx bx-sun' id="darkLight"></i>
                     <i className='bx bx-bell' ></i>
-                    <img src="asset/profile.jpg" alt="" className="profile" />
+                    <img src={ProfileImage} alt="" className="profile" />
+                    
                 </div>
             </nav>
+
+            
 
             {/* sidebar */}
             <nav className="sidebar">
@@ -119,12 +147,21 @@ function Navbar() {
                             </a>
                         </li>
                         <li className="item">
-                            <a href="/wallets" className="nav_link">
-                                <span className="navlink_icon">
-                                    <i className="bx bx-wallet"></i>
-                                </span>
-                                <span className="navlink">Wallets</span>
-                            </a>
+                            <div href="/" className="nav_link submenu_item">
+                            <span className="navlink_icon">
+                                <i className="bx bx-wallet"></i>
+                            </span>
+                            <span className="navlink">Slots</span>
+                            <i className="bx bx-chevron-right arrow-left"></i>
+                            </div>
+                            <ul className="menu_items submenu">
+                            {userData && userData.wallet.slots.map(slot => (
+                            <React.Fragment key={slot.id}>
+                                <a href={`/slot/${slot.id}`} className="nav_link sublink">Slot {slot.name}</a>
+                            </React.Fragment>
+                            ))}
+
+                            </ul>
                         </li>
                         <li className="item">
                             <a href="/profile" className="nav_link">
@@ -150,6 +187,7 @@ function Navbar() {
                 </div>
             </nav>
 
+            
         </div>
     );
 }
