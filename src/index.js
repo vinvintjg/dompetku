@@ -2,15 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Form from './Form';
-import Navbar from './Navbar/Navbar';
-import Nav from './Navbar/Nav';
-import Testing from './Dashboard/Testing';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Nav />
+    <App />
   </React.StrictMode>
 );
 

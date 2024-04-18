@@ -12,6 +12,9 @@ import '../../src/Stylist.css'
 // import required modules
 import { EffectCards } from 'swiper/modules';
 import axios from 'axios';
+import AddSlot from '../Dashboard/AddSlot'
+import DeleteSlot from '../Dashboard/DeleteSlot'
+import AddBalance from './AddBalance';
 
 function formatDate(dateString) {
   const options = { 
@@ -33,6 +36,16 @@ export default function Dashboard() {
   const [originalUsedBalance, setOriginalUsedBalance] = useState('');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isPopupSlotOpen, setIsPopupSlotOpen] = useState(false);
+
+  const handleDeleteSlot = (slotId) => {
+    setUserData(prevUserData => ({
+        ...prevUserData,
+        wallet: {
+            ...prevUserData.wallet,
+            slots: prevUserData.wallet.slots.filter(slot => slot.id !== slotId)
+        }
+    }));
+};
 
   const [userData, setUserData] = useState(null);
 
@@ -83,6 +96,8 @@ export default function Dashboard() {
     closePopup();
   };
 
+  
+
   useEffect(() => {
     const amountElement = document.getElementById('amount');
     const unusedBalanceElement = document.getElementById('unusedBalance');
@@ -129,55 +144,11 @@ export default function Dashboard() {
     <>  
     {/* POP UP BALANCE */}
     {isPopupOpen && (
-        <div className="popup show">
-          <div className="form-update">
-            <div className="font-24 black-color" style={{ textAlign: 'center' }}>Update Balance</div>
-            <div className="label-input black-color">
-              <label htmlFor="Method">Method</label>
-              <select name="Method" id="">
-                  <option value="-1">Select...</option>
-                  <option value="1">Deposit</option>
-                  <option value="2">Decrease</option>
-              </select>
-            </div>
-            <div className="label-input black-color">
-              <label for="Nominal">Nominal</label>
-              <input type="number" name="Nominal" placeholder="Nominal"/>
-            </div>
-            <button className="btn-icon2 font-12" onClick={updateData}>Update Data</button>
-            <button className="btn-icon2 btn-icon3 font-12" onClick={closePopup}>Cancel</button>
-          </div>
-        </div>
+        <AddBalance/>
       )}
     {/* POP UP SLOT */}
     {isPopupSlotOpen && (
-    <div id="" class="popup show">
-      <div class="form-update">
-        <div class="font-24 black-color" style={{ textAlign: 'center' }}>New Slots</div>
-          <div class="label-input black-color">
-              <label for="Method">Method</label>
-              <select name="Method" id="">
-                  <option value="-1">Select...</option>
-                  <option value="1">Deposit</option>
-                  <option value="2">Decrease</option>
-              </select>
-          </div>
-          <div class="label-input black-color">
-            <label for="Name">Name</label>
-            <input type="text" name="Name" placeholder="Name"/>
-          </div>
-          <div class="label-input black-color">
-              <label for="Nominal">Nominal</label>
-              <input type="number" name="Nominal" placeholder="Nominal"/>
-          </div>
-          <div class="label-input black-color">
-            <label for="Deskripsi">Deskripsi</label>
-            <input type="text" name="Deskripsi" placeholder="Deskripsi"/>
-          </div>
-          <button className="btn-icon2 font-12" onClick={updateData}>Update Data</button>
-            <button className="btn-icon2 btn-icon3 font-12" onClick={closePopup}>Cancel</button>
-      </div>
-    </div>
+      <AddSlot />
     )}
     <Navbar/>
     
@@ -198,7 +169,7 @@ export default function Dashboard() {
               <div id="amount" className="font-32 black-color">
               {userData && (
                 <>
-                  {(userData.wallet.unUsedBalance + userData.wallet.usedBalance).toLocaleString('id-ID')},00
+                  {(userData.wallet.unUsedBalance + userData.wallet.usedBalance).toLocaleString()}.00
                 </>
               )}
             </div>
@@ -211,19 +182,23 @@ export default function Dashboard() {
         <div className="card-depo-decr">
           <div className="card-deposit">
             <div className="font-16 black-color">
-              Unsued Balance
+              Unused Balance
             </div>
             <div id="unusedBalance" className="font-16 black-color">
             {userData && (
               <>
-                Rp {userData.wallet.unUsedBalance.toLocaleString('id-ID')},00
+                Rp {userData.wallet.unUsedBalance.toLocaleString()}.00
               </>
             )}
             </div>
             <div className="wrapper gap-4">
               <i id="unusedIcon" className='bx bx-right-top-arrow-circle blue-color'></i>
               <div className="font-12 black-color">
-                15,2%
+              {userData && (
+                <>
+                  {`${(userData.wallet.unUsedBalance * 100 / (userData.wallet.unUsedBalance + userData.wallet.usedBalance)).toFixed(2)}%`}
+                </>
+              )}
               </div>
             </div>
           </div>
@@ -234,14 +209,18 @@ export default function Dashboard() {
             <div id="usedBalance" className="font-16 black-color">
             {userData && (
               <>
-                Rp {userData.wallet.usedBalance.toLocaleString('id-ID')},00
+                Rp {userData.wallet.usedBalance.toLocaleString()}.00
               </>
             )}
             </div>
             <div className="wrapper gap-4">
               <i id="usedIcon" className='bx bx-right-down-arrow-circle red-color' ></i>
               <div className="font-12 black-color">
-                15,2%
+              {userData && (
+                  <>
+                      {`${(userData.wallet.usedBalance * 100 / (userData.wallet.unUsedBalance + userData.wallet.usedBalance)).toFixed(2)}%`}
+                  </>
+              )}
               </div>
             </div>
           </div>
@@ -265,24 +244,24 @@ export default function Dashboard() {
               modules={[EffectCards]}
               className="mySwiper">
                 {/* Here Card */}
-                {userData && userData.wallet.slots.map(slot => (
+                {userData && userData.wallet.slots.map((slot, index) => (
                 <SwiperSlide key={slot.id} height={10}>
                   <div className="card-font">
                     <div className="space-between-top">
                       <div className="space-between-top gap-12">
                         <img src={BankLogo} alt="Bank Logo" className="img-16" />
-                        <div className="font-14 white-to-white-color">Slot {slot.id}</div>
+                        <div className="font-14 white-to-white-color">Slot {index + 1}</div>
                       </div>
                       <div className="dropdown">
                         <img src={TriDotLogo} className="img-16" alt="Tri Dot Logo" />
                         <div className="dropdown-content">
-                          <a href="/" className="font-12">Delete</a>
+                          <DeleteSlot slotId={slot.id} onDelete={handleDeleteSlot} />
                         </div>
                       </div>
                     </div>
                     <div className="space-balance">
                       <div className="font-12 white-to-white-color">Balance</div>
-                      <div className="font-16 white-to-white-color">Rp {slot.balance.toLocaleString()},00</div>
+                      <div className="font-16 white-to-white-color">Rp {slot.balance.toLocaleString()}.00</div>
                     </div>
                     <div className="font-14 white-to-white-color">{slot.name}</div>
                   </div>
@@ -343,7 +322,7 @@ export default function Dashboard() {
                         </td>
                         <td className="w25 pl6">
                           <div className="font-14 black-color">
-                            {history.type === 'DECREASE' ? '-' : '+'} Rp {history.amount},00
+                            {history.type === 'DECREASE' ? '-' : '+'} Rp {history.amount.toLocaleString()}.00
                           </div>
                         </td>
                       </tr>
@@ -376,7 +355,7 @@ export default function Dashboard() {
                           </td>
                           <td className="w25 pl6">
                             <div className="font-14 black-color">
-                              + Rp {history.amount.toLocaleString()},00
+                              + Rp {history.amount.toLocaleString()}.00
                             </div>
                           </td>
                         </tr>
@@ -411,7 +390,7 @@ export default function Dashboard() {
                           </td>
                           <td className="w25 pl6">
                             <div className="font-14 black-color">
-                              - Rp {history.amount.toLocaleString()},00
+                              - Rp {history.amount.toLocaleString()}.00
                             </div>
                           </td>
                         </tr>

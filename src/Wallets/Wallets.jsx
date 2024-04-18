@@ -5,7 +5,9 @@ import Navbar from "../Navbar/Navbar";
 import BankLogo from "../Assets/Vector.svg";
 import TriDotLogo from "../Assets/3dot.svg";
 import ProfileImage from "../Assets/profile.jpg";
-import ApiGetDataBySlot from "../Dashboard/Testing"
+import DeleteSlot from "../Dashboard/DeleteSlot"
+import AddHistory from './AddHistory';
+import AddSlot from '../Dashboard/AddSlot';
 // Import Swiper React components
 // import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -33,7 +35,20 @@ function formatDate(dateString) {
 }
 
 export default function Wallets() {
+  const [isPopupSlotOpen, setIsPopupSlotOpen] = useState(false);
 
+  const openPopupSlot = () => {
+    setIsPopupSlotOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupSlotOpen(false);
+  };
+
+  const updateData = () => {
+    console.log("Data updated!");
+    closePopup();
+  };
   const openCity = (evt, cityName) => {
     const tabcontents = document.querySelectorAll(".tabcontent");
     tabcontents.forEach(tabcontent => {
@@ -62,23 +77,36 @@ export default function Wallets() {
 
   const [slotData, setSlotData] = useState(null);
 
-  const slotId = currentId; 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/v1/dompetku/owner?username=Vincent`);
-        const requestedSlot = response.data.wallet.slots.find(slot => slot.id === parseInt(slotId));
-        setSlotData(requestedSlot);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/v1/dompetku/owner?username=Vincent`);
+      const requestedSlot = response.data.wallet.slots.find(slot => slot.id === parseInt(id));
+      setSlotData(requestedSlot);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
-  }, [slotId]);
+  }, [id]);
+
+  const handleDeleteSlot = (slotId) => {
+    setUserData(prevUserData => ({
+        ...prevUserData,
+        wallet: {
+            ...prevUserData.wallet,
+            slots: prevUserData.wallet.slots.filter(slot => slotData.id !== slotId)
+        }
+    }));
+};
 
   return (
     <>
+    {/* POP UP SLOT */}
+    {isPopupSlotOpen && (
+      <AddSlot />
+    )}
       <Navbar/>
         <div className="content-all">
         <div className="content-left h100" >
@@ -89,7 +117,7 @@ export default function Wallets() {
               <div className="font-24 black-color">Your Slots</div>
               <div className="font-12 black-color">(3)</div>
             </div>
-            <button className="btn-icon" onclick="openPopslot()">
+            <button className="btn-icon" onClick={openPopupSlot}>
               <div className="font-12">Add New</div>
               <i className='bx bx-plus' ></i>
             </button>
@@ -110,13 +138,13 @@ export default function Wallets() {
                       <div className="dropdown">
                         <img src={TriDotLogo} className="img-16" alt="Tri Dot Logo" />
                         <div className="dropdown-content">
-                          <a href="/" className="font-12">Delete</a>
+                          <DeleteSlot slotId={slotData.id} onDelete={handleDeleteSlot} />
                         </div>
                       </div>
                     </div>
                     <div className="space-balance">
                       <div className="font-12 white-to-white-color">Balance</div>
-                      <div className="font-16 white-to-white-color">Rp {slotData.balance.toLocaleString()},00</div>
+                      <div className="font-16 white-to-white-color">Rp {slotData.balance.toLocaleString()}.00</div>
                     </div>
                     <div className="font-14 white-to-white-color">{slotData.name}</div>
                   </div>
@@ -128,26 +156,10 @@ export default function Wallets() {
           </div>
           
         {/* Section FORM UPADTE */}
-        <div className="form-update">
-            <div className="label-input black-color">
-                <label for="Method">Method</label>
-                <select name="Method" id="">
-                    <option value="-1">Select...</option>
-                    <option value="1">Deposit</option>
-                    <option value="2">Decrease</option>
-                </select>
-            </div>
-            <div className="label-input black-color">
-                <label for="Nominal">Nominal</label>
-                <input type="number" name="Nominal" placeholder="Nominal"/>
-            </div>
-            <div className="label-input black-color">
-                <label for="Deskripsi">Deskripsi</label>
-                <input type="text" name="Deskripsi" placeholder="Deskripsi"/>
-            </div>
-            <button className="btn-icon2 font-12">Update Data</button>
+        {slotData && (
+        <AddHistory slotId={slotData.id}  onUpdate={fetchData} />
+        )}
         </div>
-          </div>
 
           
         </div>
@@ -167,41 +179,41 @@ export default function Wallets() {
                 <table className="w100">
                   <tbody className="w100">
                   {slotData ? (
-              <>
-            {slotData && slotData.histories.map(history => (
-              <tr className="w100" key={history.id}>
-              <td className="w10">
-                <img className="img-50 radius-12" src={ProfileImage} alt="" />
-              </td>
-              <td className="w20">
-                <div className="activity-name">
-                  <div className="font-16 black-color">{slotData.name}</div>
-                  <div className="font-12 black-color-50">{formatDate(history.date)}</div>
-                </div>
-              </td>
-              <td className="w25">
-                <div className="font-12 black-color-50">{history.description}</div>
-              </td>
-              <td className="w25 pl6">
-                <div className="font-14 black-color">
-                  - Rp {history.amount.toLocaleString()},00
-                </div>
-              </td>
-            </tr>
-            ))}
-        </>
-      ) : (
-        <p>Not FOund...</p>
-      )}
+                    <>
+                  {slotData && slotData.histories.map(history => (
+                    <tr className="w100" key={history.id}>
+                    <td className="w10">
+                      <img className="img-50 radius-12" src={ProfileImage} alt="" />
+                    </td>
+                    <td className="w20">
+                      <div className="activity-name">
+                        <div className="font-16 black-color">{slotData.name}</div>
+                        <div className="font-12 black-color-50">{formatDate(history.date)}</div>
+                      </div>
+                    </td>
+                    <td className="w25">
+                      <div className="font-12 black-color-50">{history.description}</div>
+                    </td>
+                    <td className="w25 pl6">
+                      <div className="font-14 black-color">
+                      {history.type === 'DECREASE' ? '-' : '+'} Rp {history.amount.toLocaleString()}.00
+                      </div>
+                    </td>
+                  </tr>
+                  ))}
+                    </>
+                  ) : (
+                    <p>Not Found...</p>
+                  )}
 
 
                   </tbody>
                 </table>
               </div>
               
-              <div id="Deposit" className="tabcontent">
-                <table>
-                  <tbody>
+              <div id="Deposit" className="tabcontent h100" >
+                <table className="w100">
+                  <tbody className="w100">
                   {slotData ? (
                   <>
                   {slotData && slotData.histories.map(history => (
@@ -221,7 +233,7 @@ export default function Wallets() {
                     </td>
                     <td className="w25 pl6">
                       <div className="font-14 black-color">
-                        - Rp {history.amount.toLocaleString()},00
+                        + Rp {history.amount.toLocaleString()}.00
                       </div>
                     </td>
                   </tr>
@@ -235,7 +247,7 @@ export default function Wallets() {
                 </table>
               </div>
               
-              <div id="Decrease" className="tabcontent">
+              <div id="Decrease" className="tabcontent h100">
                 <table>
                   <tbody>
                   {slotData ? (
@@ -257,7 +269,7 @@ export default function Wallets() {
                     </td>
                     <td className="w25 pl6">
                       <div className="font-14 black-color">
-                        - Rp {history.amount.toLocaleString()},00
+                        - Rp {history.amount.toLocaleString()}.00
                       </div>
                     </td>
                   </tr>

@@ -867,7 +867,19 @@ input::placeholder {
 .text-center{
   text-align: center;
 }
+.content-center{
+  align-content: center;
+}
 
+.pb12{
+  padding-bottom: 12px;
+}
+.pb24{
+  padding-bottom: 24px;
+}
+.pb32{
+  padding-bottom: 32px;
+}
 .pl30{
   padding-left: 30px;
 }
@@ -880,6 +892,14 @@ input::placeholder {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row;
+}
+.space-between{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  column-gap: 8px;
 }
 
 .font-32{
@@ -910,6 +930,13 @@ input::placeholder {
   line-height: 24px;
   text-align: left;
 
+}
+.font-16-r{
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20.86px;
+  text-align: center;
 }
 .font-14{
   font-family: Poppins;
@@ -977,6 +1004,9 @@ input::placeholder {
   color: var(--white-to-white-color);
 }
 
+.hidden{
+  display: none;
+}
 
 
 /* NO PAGE */
@@ -991,4 +1021,29 @@ input::placeholder {
 }
 .no-deco{
   text-decoration: none;
+}
+
+/* AUTH */
+img.dompet3D{
+  width: auto; 
+  height: 100vh; 
+}
+
+.container{
+  padding:0rem 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  background-color: #799DF9;
+
+}
+
+form.auth{
+  padding: 62px;
+  border-radius: 12px;
+  background-color: var(--white-color);
+  margin-right: 6%;
+  width: 35%;
+  text-align: center;
 }

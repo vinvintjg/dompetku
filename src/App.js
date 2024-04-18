@@ -1,76 +1,27 @@
-import React, { useState, useEffect } from 'react';
-
-function WalletInfo({ username }) {
-  const [walletData, setWalletData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-
-    // Fetch data from the API
-    fetch(`http://localhost:8080/api/v1/dompetku/owner?username=${username}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setWalletData(data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setError('Failed to fetch data');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [username]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!walletData) {
-    return <div>Error: Unable to fetch data</div>;
-  }
-
+import ReactDOM from "react-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "../src/Navbar/Navbar.jsx";
+import Profile from "../src/Profile/Profile.jsx";
+import Wallets from "../src/Wallets/Wallets.jsx";
+import Dashboard from "../src/Dashboard/Dashboard.jsx";
+import Login from "../src/Auth/Login.jsx";
+import Register from "../src/Auth/Register.jsx";
+import NoPage from "../src/NoPage/NoPage.jsx"
+export default function Nav() {
   return (
-    <div>
-      <h1>Welcome, {walletData.username}</h1>
-      <h2>Wallet Balance: {walletData.wallet.unUsedBalance}</h2>
-      <div>
-        {walletData.wallet.slots.map(slot => (
-          <div key={slot.id}>
-            <h3>{slot.name}</h3>
-            <p>Balance: {slot.balance}</p>
-            <ul>
-              {slot.histories.map(history => (
-                <li key={history.id}>
-                  {history.description} - {history.amount} ({history.date})
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Dashboard/>}  />
+        <Route path="/login" element={<Login />}/>
+        <Route path="/register" element={<Register />}/>
+        <Route path="/navbar" element={<Navbar />}/>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/slot/:id" element={<Wallets />} />
+        <Route path="*" element={<NoPage />}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-// Usage of WalletInfo component with username set to "kevin"
-function App() {
-  return (
-    <div>
-      <WalletInfo username="kevin" />
-    </div>
-  );
-}
-
-export default App;
+ReactDOM.render(<Nav />, document.getElementById('root'));
