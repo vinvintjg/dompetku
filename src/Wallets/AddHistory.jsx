@@ -5,7 +5,6 @@ function AddHistory({ slotId, onUpdate }) {
     const [method, setMethod] = useState('');
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
-    const [isDeposit, setIsDeposit] = useState(false);
     
 
     const handleUpdateData = async () => {
@@ -41,7 +40,7 @@ function AddHistory({ slotId, onUpdate }) {
         <div className="form-update">
             <div className="label-input black-color">
                 <label htmlFor="Method">Method</label>
-                <select name="Method" id="" value={method} onChange={(e) => setMethod(e.target.value)}>
+                <select name="Method" value={method} onChange={(e) => setMethod(e.target.value)}>
                     <option value="-1">Select...</option>
                     <option value="1">Deposit</option>
                     <option value="2">Decrease</option>
@@ -53,7 +52,14 @@ function AddHistory({ slotId, onUpdate }) {
             </div>
             <div className="label-input black-color">
                 <label htmlFor="Deskripsi">Deskripsi</label>
-                <input type="text" name="Deskripsi" placeholder="Deskripsi" value={description} onChange={(e) => setDescription(e.target.value)} readOnly={isDeposit} />
+                <input 
+                    type="text" 
+                    name="Deskripsi" 
+                    placeholder="Deskripsi" 
+                    value={description} 
+                    onChange={(e) => setDescription(e.target.value)} 
+                    readOnly={method === "1"}
+                />
             </div>
             <button className="btn-icon2 font-12" onClick={handleUpdateData}>Update Data</button>
         </div>

@@ -4,10 +4,10 @@ function EditProfile() {
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [message, setMessage] = useState('');
-
+  const getUserId = localStorage.getItem("getUserId");
   const handleEdit = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/dompetku/owner/edit/1?username=${newUsername}&password=${newPassword}`, {
+      const response = await fetch(`http://localhost:8080/api/v1/dompetku/owner/edit/${getUserId}?username=${newUsername}&password=${newPassword}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -15,7 +15,10 @@ function EditProfile() {
       });
 
       if (response.ok) {
+        localStorage.setItem('getUsername', newUsername);
+        localStorage.setItem('getPassword', newPassword);
         setMessage('Owner information updated successfully.');
+        window.location.href = "/profile";
       } else {
         const data = await response.json();
         setMessage(data.message); // Assuming the API returns an error message
@@ -33,11 +36,11 @@ function EditProfile() {
         <div class="font-24 black-color" style={{ textAlign: 'center' }}>Update Profile</div>
           <div class="label-input black-color">
               <label for="name">Name</label>
-              <input type="text" name="name" value={newUsername} placeholder="Name" onChange={e => setNewUsername(e.target.value)}/>
+              <input type="text" name="name" value={newUsername} placeholder="Name" onChange={e => setNewUsername(e.target.value)} required/>
           </div>
           <div class="label-input black-color">
             <label for="number">Password</label>
-            <input type="password" name="password" placeholder="Password" value={newPassword} onChange={e => setNewPassword(e.target.value)}/>
+            <input type="password" name="password" placeholder="Password" value={newPassword} onChange={e => setNewPassword(e.target.value)} required/>
           </div>
           <button className="btn-icon2 font-12" onClick={handleEdit} >Update</button>
           <a className="btn-icon2 btn-icon3 font-12 no-deco" href="/profile">Cancel</a>

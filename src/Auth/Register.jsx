@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Dompet3D from '../Assets/Dompet3D.png';
 import DompetkuLogo from '../Assets/DompetkuLogo.svg';
+import axios from 'axios';
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -25,8 +26,21 @@ function Register() {
     try {
       const response = await fetch('http://localhost:8080/api/v1/dompetku/owner/saveOwner', requestOptions);
       if (response.ok) {
-        setMessage('Success Register');
-        alert('Success Register');
+
+        const response2 = await axios.get(`http://localhost:8080/api/v1/dompetku/owner?username=${username}&password=${password}`);
+        const userData = response2.data;
+        localStorage.setItem('getUsername', userData.username);
+        localStorage.setItem('getUserId', userData.id);
+        localStorage.setItem('getPassword', userData.password);
+        console.log(userData.id)
+
+        // Add new wallet for the registered user
+        await axios.post(`http://localhost:8080/api/v1/dompetku/owner/addNewWallet/${userData.id}`);
+        const response3= await axios.get(`http://localhost:8080/api/v1/dompetku/owner?username=${username}&password=${password}`);
+        const userDataNew = response3.data;
+  
+        localStorage.setItem('getWalletId', userDataNew.wallet.id);
+        window.location.href = '/dashboard';
       } else {
         const errorData = await response.json();
         setMessage(errorData.message);

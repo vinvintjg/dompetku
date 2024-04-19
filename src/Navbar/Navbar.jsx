@@ -6,13 +6,13 @@ import ProfileImage from "../Assets/profile.jpg";
 import axios from 'axios';
 
 function Navbar() {
-
+    const getUsername = localStorage.getItem('getUsername');
     const [userData, setUserData] = useState(null);
-
+    const getPassword = localStorage.getItem('getPassword');
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/dompetku/owner?username=Vincent');
+            const response = await axios.get(`http://localhost:8080/api/v1/dompetku/owner?username=${getUsername}&password=${getPassword}`);
             setUserData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -125,8 +125,9 @@ function Navbar() {
                     <i className="bi bi-grid"></i>
                     <i className='bx bx-sun' id="darkLight"></i>
                     <i className='bx bx-bell' ></i>
-                    <img src={ProfileImage} alt="" className="profile" />
-                    
+                    <div className='space-between'>
+                        <img src={ProfileImage} alt="" className="profile" />
+                    </div>
                 </div>
             </nav>
 

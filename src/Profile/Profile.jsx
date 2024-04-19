@@ -8,7 +8,9 @@ import axios from 'axios';
 function UserProfile() {
   const [userData, setUserData] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  
+  const getUsername = localStorage.getItem('getUsername');
+  const getWalletId = localStorage.getItem('getWalletId');
+  const getPassword = localStorage.getItem('getPassword');
   const openPopup = () => {
     setIsPopupOpen(true);
   };
@@ -16,7 +18,7 @@ function UserProfile() {
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/dompetku/owner?username=Vincent');
+            const response = await axios.get(`http://localhost:8080/api/v1/dompetku/owner?username=${getUsername}&password=${getPassword}`);
             setUserData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -46,11 +48,11 @@ function UserProfile() {
       <div className="form-profile">
         <div className="label-input black-color">
           <label htmlFor="Username">Username</label>
-          <input type="text" name="Username" value={userData.username} readOnly />
+          <input type="text" name="Username" value={getWalletId} readOnly />
         </div>
         <div className="label-input black-color">
           <label htmlFor="Email">Email</label>
-          <input type="text" name="Email" value="{userData.username}" readOnly />
+          <input type="text" name="Email" value={userData.username} readOnly />
         </div>
       </div>
       )}

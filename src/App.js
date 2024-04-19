@@ -11,11 +11,11 @@ export default function Nav() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Dashboard/>}  />
+        <Route index element={<Register/>}   />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/navbar" element={<Navbar />}/>
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/slot/:id" element={<Wallets />} />
         <Route path="*" element={<NoPage />}/>

@@ -76,10 +76,12 @@ export default function Wallets() {
   const [userData, setUserData] = useState(null);
 
   const [slotData, setSlotData] = useState(null);
-
+  const getUsername = localStorage.getItem('getUsername');
+  const getPassword = localStorage.getItem('getPassword');
+  const getUserId = localStorage.getItem('getUserId');
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/dompetku/owner?username=Vincent`);
+      const response = await axios.get(`http://localhost:8080/api/v1/dompetku/owner?username=${getUsername}&password=${getPassword}`);
       const requestedSlot = response.data.wallet.slots.find(slot => slot.id === parseInt(id));
       setSlotData(requestedSlot);
     } catch (error) {
@@ -133,7 +135,7 @@ export default function Wallets() {
                     <div className="space-between-top">
                       <div className="space-between-top gap-12">
                         <img src={BankLogo} alt="Bank Logo" className="img-16" />
-                        <div className="font-14 white-to-white-color">Slot {slotData.id}</div>
+                        <div className="font-14 white-to-white-color">Slot {slotData.name}</div>
                       </div>
                       <div className="dropdown">
                         <img src={TriDotLogo} className="img-16" alt="Tri Dot Logo" />
@@ -146,7 +148,7 @@ export default function Wallets() {
                       <div className="font-12 white-to-white-color">Balance</div>
                       <div className="font-16 white-to-white-color">Rp {slotData.balance.toLocaleString()}.00</div>
                     </div>
-                    <div className="font-14 white-to-white-color">{slotData.name}</div>
+                    <div className="font-14 white-to-white-color"></div>
                   </div>
                 </div>
                 )}

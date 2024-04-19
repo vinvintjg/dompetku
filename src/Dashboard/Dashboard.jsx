@@ -31,12 +31,13 @@ function formatDate(dateString) {
 }
 
 export default function Dashboard() {
+  const getUsername = localStorage.getItem('getUsername');
   const [originalAmount, setOriginalAmount] = useState('');
   const [originalUnusedBalance, setOriginalUnusedBalance] = useState('');
   const [originalUsedBalance, setOriginalUsedBalance] = useState('');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isPopupSlotOpen, setIsPopupSlotOpen] = useState(false);
-
+  const getPassword = localStorage.getItem('getPassword');
   const handleDeleteSlot = (slotId) => {
     setUserData(prevUserData => ({
         ...prevUserData,
@@ -52,7 +53,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1/dompetku/owner?username=Vincent');
+        const response = await axios.get(`http://localhost:8080/api/v1/dompetku/owner?username=${getUsername}&password=${getPassword}`);
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
