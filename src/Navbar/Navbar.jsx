@@ -4,7 +4,7 @@ import './Style.css';
 import '../../src/Stylist.css'
 import ProfileImage from "../Assets/profile.jpg";
 import axios from 'axios';
-
+import Logout from '../Auth/Logout'
 function Navbar() {
     const getUsername = localStorage.getItem('getUsername');
     const [userData, setUserData] = useState(null);
@@ -124,8 +124,11 @@ function Navbar() {
                 <div className="navbar_content">
                     <i className="bi bi-grid"></i>
                     <i className='bx bx-sun' id="darkLight"></i>
-                    <i className='bx bx-bell' ></i>
-                    <div className='space-between'>
+                    {/* <i className='bx bx-bell' ></i> */}
+                    <div className='space-between dropdown arrow-down-up'>
+                        <div className="font-12">{getUsername}</div>
+                        <i class='bx bx-chevron-down'></i>
+                        <Logout />
                         <img src={ProfileImage} alt="" className="profile" />
                     </div>
                 </div>

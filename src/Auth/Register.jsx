@@ -32,7 +32,7 @@ function Register() {
         localStorage.setItem('getUsername', userData.username);
         localStorage.setItem('getUserId', userData.id);
         localStorage.setItem('getPassword', userData.password);
-        console.log(userData.id)
+        localStorage.setItem("isLoggedIn", true)
 
         // Add new wallet for the registered user
         await axios.post(`http://localhost:8080/api/v1/dompetku/owner/addNewWallet/${userData.id}`);

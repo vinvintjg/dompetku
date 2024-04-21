@@ -4,6 +4,8 @@ import Navbar from "../Navbar/Navbar";
 import EditProfile from '../Profile/EditProfile';
 import '../../src/Stylist.css'
 import axios from 'axios';
+import DeleteAccount from './DeleteAccount';
+import ResetWallet from './resetWallet';
 
 function UserProfile() {
   const [userData, setUserData] = useState(null);
@@ -54,6 +56,9 @@ function UserProfile() {
           <label htmlFor="Email">Email</label>
           <input type="text" name="Email" value={userData.username} readOnly />
         </div>
+        
+        <DeleteAccount/>
+        <ResetWallet/>
       </div>
       )}
     </div>

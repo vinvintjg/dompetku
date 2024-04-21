@@ -24,6 +24,7 @@ function Login() {
       localStorage.setItem('getUsername', userData.username);
       localStorage.setItem('getPassword', userData.password);
       localStorage.setItem('getUserId', userData.id);
+      localStorage.setItem('isLoggedIn', true)
   
       // Redirect to another page after successful login
       window.location.href = '/dashboard'; // Redirect to dashboard page
