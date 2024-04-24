@@ -21,7 +21,7 @@ function DeleteAccount() {
     };
 
     return (
-        <a className="font-12" href='/login' onClick={handleDelete}>Delete Account</a>
+        <a className="font-14 btn-a red-color" href='/login' onClick={handleDelete}>Delete Account</a>
     );
 }
 

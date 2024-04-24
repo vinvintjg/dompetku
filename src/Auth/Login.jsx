@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dompet3D from '../Assets/Dompet3D.png';
 import DompetkuLogo from '../Assets/DompetkuLogo.svg';
 import axios from 'axios';
@@ -6,6 +6,17 @@ import axios from 'axios';
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
+
+  useEffect(() => {
+    const body = document.querySelector("body");
+    if (darkMode) {
+        body.classList.add("dark");
+    } else {
+        body.classList.remove("dark");
+    }
+    localStorage.setItem('darkMode', darkMode); // Update local storage with dark mode status
+    }, [darkMode]);
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent form submission
@@ -41,7 +52,7 @@ function Login() {
         <img className="dompet3D" src={Dompet3D} alt="error" />
         <form className="auth" onSubmit={handleLogin}>
           <img className="dompetkuLogo pb12" src={DompetkuLogo} alt="error" height={42} width={213} />
-          <div className='font-16-r pb32'>Login To Your Account</div>
+          <div className='font-16-r pb32 black-color'>Login To Your Account</div>
           <div className="label-input black-color pb12">
             <label htmlFor="username">Username</label>
             <input type="text" name="username" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />

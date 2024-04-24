@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from "../Navbar/Navbar";
-import BankLogo from "../Assets/Vector.svg";
-import TriDotLogo from "../Assets/3dot.svg";
-import ProfileImage from "../Assets/profile.jpg";
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React, { useState, useEffect } from 'react'
+import Navbar from "../Navbar/Navbar"
+import BankLogo from "../Assets/Vector.svg"
+import TriDotLogo from "../Assets/3dot.svg"
+import ProfileImage from "../Assets/profile.jpg"
+import { Swiper, SwiperSlide } from 'swiper/react'
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/effect-cards';
+import 'swiper/css'
+import 'swiper/css/effect-cards'
 import './Style.css';
 import '../../src/Stylist.css'
-// import required modules
-import { EffectCards } from 'swiper/modules';
-import axios from 'axios';
+import { EffectCards } from 'swiper/modules'
+import axios from 'axios'
 import AddSlot from '../Dashboard/AddSlot'
 import DeleteSlot from '../Dashboard/DeleteSlot'
-import AddBalance from './AddBalance';
+import AddBalance from './AddBalance'
+import PieChart from './PieChart'
+import GraphChart from './GraphChart'
 
 function formatDate(dateString) {
   const options = { 
@@ -92,12 +93,6 @@ export default function Dashboard() {
     setIsPopupSlotOpen(false);
   };
 
-  const updateData = () => {
-    console.log("Data updated!");
-    closePopup();
-  };
-
-  
 
   useEffect(() => {
     const amountElement = document.getElementById('amount');
@@ -278,18 +273,20 @@ export default function Dashboard() {
           <div className="card-statistic">
             <div className="space-between-center">
               <div className="font-24 black-color">Statistics</div>
-              <button className="btn-icon">
+              {/* <button className="btn-icon">
                 <div className="font-12">Week</div>
                 <i className='bx bx-chevron-down font-16'></i>
-              </button>
+              </button> */}
             </div>
             <div className="cart-all">
               <div className="cart-graph">
-                <canvas id="myChart" width="30" height="12"></canvas>
+                <GraphChart/>
+                <div className='font-12 blue-color'>Total Decrease by The Month</div>
               </div>
-              {/* <div className="cart-circle">
-                <canvas id="myPieChart"  width="30" height="17"></canvas>
-              </div> */}
+              <div className="cart-circle">
+                <PieChart />
+                <div className='font-12 black-color'>Balance Slot Percentage</div>
+              </div>
             </div>
           </div>
           <div className="card-activity">

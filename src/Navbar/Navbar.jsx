@@ -9,6 +9,7 @@ function Navbar() {
     const getUsername = localStorage.getItem('getUsername');
     const [userData, setUserData] = useState(null);
     const getPassword = localStorage.getItem('getPassword');
+    const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
     useEffect(() => {
         const fetchData = async () => {
         try {
@@ -68,20 +69,25 @@ function Navbar() {
         };
 
         const handleDarkLightClick = () => {
-            body.classList.toggle("dark");
-            if (body.classList.contains("dark")) {
-                darkLight.classList.replace("bx-sun", "bx-moon");
-            } else {
-                darkLight.classList.replace("bx-moon", "bx-sun");
-            }
+            const newDarkMode = !darkMode;
+            setDarkMode(newDarkMode);
+            localStorage.setItem('darkMode', newDarkMode); // Menyimpan mode dalam local storage
         };
+        if (darkMode) {
+            body.classList.add("dark");
+            darkLight.classList.replace("bx-sun", "bx-moon");
+        } else {
+            body.classList.remove("dark");
+            darkLight.classList.replace("bx-moon", "bx-sun");
+        }
+
+        darkLight.addEventListener("click", handleDarkLightClick);
 
         sidebarOpen.addEventListener("click", handleSidebarOpen);
         sidebarClose.addEventListener("click", handleSidebarClose);
         sidebarExpand.addEventListener("click", handleSidebarExpand);
         sidebar.addEventListener("mouseenter", handleMouseEnter);
         sidebar.addEventListener("mouseleave", handleMouseLeave);
-        darkLight.addEventListener("click", handleDarkLightClick);
 
         if (window.innerWidth < 768) {
             sidebar.classList.add("close");
@@ -110,7 +116,7 @@ function Navbar() {
               });
               
         };
-    }, []);
+    }, [darkMode]);
 
     return (
         <div>
@@ -126,7 +132,7 @@ function Navbar() {
                     <i className='bx bx-sun' id="darkLight"></i>
                     {/* <i className='bx bx-bell' ></i> */}
                     <div className='space-between dropdown arrow-down-up'>
-                        <div className="font-12">{getUsername}</div>
+                        <div className="font-12 black-color">{getUsername}</div>
                         <i class='bx bx-chevron-down'></i>
                         <Logout />
                         <img src={ProfileImage} alt="" className="profile" />

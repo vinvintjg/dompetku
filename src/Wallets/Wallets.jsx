@@ -78,7 +78,6 @@ export default function Wallets() {
   const [slotData, setSlotData] = useState(null);
   const getUsername = localStorage.getItem('getUsername');
   const getPassword = localStorage.getItem('getPassword');
-  const getUserId = localStorage.getItem('getUserId');
   const fetchData = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/v1/dompetku/owner?username=${getUsername}&password=${getPassword}`);

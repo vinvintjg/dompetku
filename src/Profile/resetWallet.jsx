@@ -36,9 +36,9 @@ function ResetWallet() {
     };
 
     return (
-        <button className="font-12" onClick={handleDelete}>Reset Wallet
+        <div className="font-14 btn-a blue-color" onClick={handleDelete}>Reset Wallet
         {message && <p className='font-12 red-color text-center'>{message}</p>}
-        </button>
+        </div>
         
     );
 }

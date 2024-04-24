@@ -12,7 +12,7 @@ function Logout() {
 
   return (
     <div className="dropdown-logout">
-      <a className="font-12" onClick={handleLogout} href='/login'>Logout</a>
+      <a className="font-12 black-color" onClick={handleLogout} href='/login'>Logout</a>
     </div>
   );
 }

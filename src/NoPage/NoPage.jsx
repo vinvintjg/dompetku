@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'boxicons/css/boxicons.min.css';
 import '../../src/Stylist.css'
 import Nopage from "../Assets/NoPage.svg";
 function NoPage() {
-    
+    const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
+
+    useEffect(() => {
+      const body = document.querySelector("body");
+      if (darkMode) {
+          body.classList.add("dark");
+      } else {
+          body.classList.remove("dark");
+      }
+      localStorage.setItem('darkMode', darkMode); // Update local storage with dark mode status
+      }, [darkMode]);
 
     return (
         <>

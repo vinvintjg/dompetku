@@ -50,15 +50,12 @@ function UserProfile() {
       <div className="form-profile">
         <div className="label-input black-color">
           <label htmlFor="Username">Username</label>
-          <input type="text" name="Username" value={getWalletId} readOnly />
+          <input type="text" name="Username" value={userData.username} readOnly />
         </div>
-        <div className="label-input black-color">
-          <label htmlFor="Email">Email</label>
-          <input type="text" name="Email" value={userData.username} readOnly />
+        <div className="space-between-center">
+          <ResetWallet/>
+          <DeleteAccount/>
         </div>
-        
-        <DeleteAccount/>
-        <ResetWallet/>
       </div>
       )}
     </div>
